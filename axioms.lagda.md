@@ -2,6 +2,9 @@
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl)
 open Eq.≡-Reasoning using (begin_; step-≡-∣; _∎)
+
+open import Data.Product
+open import Relation.Nullary using (¬_)
 ```
 
 ```agda
@@ -37,4 +40,8 @@ C-order-irrel-b a b c d Cabcd = C-order-irrel-l a b d c (C-order-irrel-r a b c d
 data B : Point → Point → Point → Set where
 
 postulate B-id : ∀(a b : Point) → B a b a → a ≡ b
+postulate B-Pasch : ∀(a b c d e : Point) → B a b e → B c d e → ∃[ p ] (B b p d × B d p a)
+postulate B-schema : ∀(φ ψ : Point → Set) → ∃[ p ] (∀(x y : Point) → ((φ x × ψ y) → B p x y)) → ∃[ q ] (∀(x y : Point) → B x q y)
+
+postulate B-lower-dimension : ∃[ a ] ∃[ b ] ∃[ c ] (¬(B a b c) × ¬(B b c a) × ¬(B c a b))
 ```
